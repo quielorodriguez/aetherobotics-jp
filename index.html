@@ -603,6 +603,10 @@
                 display: block; /* Show mobile menu button */
             }
             
+            .mobile-nav.active {
+                display: flex; /* Show when active */
+            }
+            
             .grid-2 {
                 grid-template-columns: 1fr; /* Single column layout for 2-column grids */
             }
@@ -685,7 +689,7 @@
                         <option value="https://quielorodriguez.github.io/aetherobotics/" lang="en">English</option>
                         <option value="https://quielorodriguez.github.io/aether-robotics-es/" lang="es">Español</option>
                         <option value="https://quielorodriguez.github.io/aether-robotics-fr/" lang="fr">Français</option>
-                        <option value="https://quielorodriguez.github.io/aether-robotics-jp/" lang="ja" selected>日本語</option>
+                        <option value="https://quielorodriguez.github.io/aetherobotics-jp/" lang="ja" selected>日本語</option>
                     </select>
                 </div>
             </div>
@@ -705,7 +709,7 @@
                     <option value="https://quielorodriguez.github.io/aetherobotics/" lang="en">English</option>
                     <option value="https://quielorodriguez.github.io/aether-robotics-es/" lang="es">Español</option>
                     <option value="https://quielorodriguez.github.io/aether-robotics-fr/" lang="fr">Français</option>
-                    <option value="https://quielorodriguez.github.io/aether-robotics-jp/" lang="ja" selected>日本語</option>
+                    <option value="https://quielorodriguez.github.io/aetherobotics-jp/" lang="ja" selected>日本語</option>
                 </select>
             </div>
         </div>
@@ -1196,11 +1200,13 @@
             }
 
             // Set the current language as selected in the dropdowns on load
+            // This logic assumes that each language version will be hosted at a distinct URL (e.g., a subfolder or subdomain)
             const currentPath = window.location.href;
             const setDropdownSelected = (selector) => {
                 if (selector) {
                     Array.from(selector.options).forEach(option => {
-                        if (currentPath.includes(option.value)) {
+                        // Check if the current URL contains the option's value (or is the exact value)
+                        if (currentPath.includes(option.value) || currentPath === option.value + '/') {
                             option.selected = true;
                         }
                     });
@@ -1213,3 +1219,4 @@
     </script>
 </body>
 </html>
+
