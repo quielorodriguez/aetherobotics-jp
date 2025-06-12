@@ -149,33 +149,48 @@
             border-bottom: none; /* No border for the last link */
         }
 
-        /* Language Switcher Styles */
-        .lang-switcher {
-            display: flex;
-            align-items: center;
-            margin-left: 32px; /* Space from last nav link */
-        }
-
-        .lang-switcher a, .lang-switcher span {
-            padding: 4px 8px;
+        /* Language Dropdown Styles */
+        .lang-selector {
+            -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+            -moz-appearance: none; /* Remove default arrow on Firefox */
+            appearance: none; /* Remove default arrow */
+            background-color: transparent;
+            border: 1px solid var(--border-light);
+            padding: 4px 10px; /* Adjust padding for visual balance */
             border-radius: 6px;
             font-size: 15px;
             font-weight: 500;
-            transition: all 0.2s ease;
             color: var(--text-secondary);
+            cursor: pointer;
+            outline: none; /* Remove outline on focus */
+            transition: all 0.2s ease;
+            position: relative; /* For custom arrow positioning */
+            padding-right: 25px; /* Space for custom arrow */
         }
 
-        .lang-switcher .active-lang {
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-        }
-
-        .lang-switcher a:hover {
+        .lang-selector:hover {
             background-color: rgba(0, 0, 0, 0.04);
         }
-        .lang-switcher .separator {
-            color: var(--text-tertiary);
-            margin: 0 8px;
+
+        .lang-selector:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Custom dropdown arrow using SVG or FontAwesome (optional, but cleaner) */
+        .lang-selector-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-left: 32px; /* Consistent spacing with other nav items */
+        }
+        .lang-selector-wrapper::after {
+            content: '▼'; /* Unicode down arrow */
+            font-size: 10px;
+            color: var(--text-secondary);
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* Clicks go through to the select element */
         }
         
         /* Hero Section */
@@ -618,6 +633,20 @@
                 flex-direction: column;
                 gap: 15px !important; /* Important to override inline style */
             }
+
+            /* Mobile language selector */
+            .mobile-nav .lang-selector-wrapper {
+                margin-left: 0;
+                padding: 12px 0; /* Match other nav link padding */
+                border-bottom: 1px solid var(--border-light);
+            }
+            .mobile-nav .lang-selector-wrapper:last-child {
+                border-bottom: none;
+            }
+            .mobile-nav .lang-selector {
+                width: 100%; /* Full width in mobile menu */
+                text-align: center;
+            }
         }
         
         @media (max-width: 480px) {
@@ -650,14 +679,14 @@
                 <a href="#about" class="nav-link">Aetherについて</a>
                 <a href="#contribute" class="nav-link">貢献</a>
                 <a href="#contact" class="nav-link">お問い合わせ</a>
-                <div class="lang-switcher">
-                    <a href="https://quielorodriguez.github.io/aetherobotics/" hreflang="en">EN</a>
-                    <span class="separator">|</span>
-                    <span class="active-lang">JA</span>
-                    <span class="separator">|</span>
-                    <a href="https://quielorodriguez.github.io/aether-robotics-es/" hreflang="es">ES</a>
-                    <span class="separator">|</span>
-                    <a href="https://quielorodriguez.github.io/aether-robotics-fr/" hreflang="fr">FR</a>
+                <!-- Language Dropdown for Desktop -->
+                <div class="lang-selector-wrapper">
+                    <select id="lang-selector-desktop" class="lang-selector">
+                        <option value="https://quielorodriguez.github.io/aetherobotics/" lang="en">English</option>
+                        <option value="https://quielorodriguez.github.io/aether-robotics-es/" lang="es">Español</option>
+                        <option value="https://quielorodriguez.github.io/aether-robotics-fr/" lang="fr">Français</option>
+                        <option value="https://quielorodriguez.github.io/aether-robotics-jp/" lang="ja" selected>日本語</option>
+                    </select>
                 </div>
             </div>
             <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
@@ -670,14 +699,14 @@
             <a href="#about" class="nav-link">Aetherについて</a>
             <a href="#contribute" class="nav-link">貢献</a>
             <a href="#contact" class="nav-link">お問い合わせ</a>
-            <div class="lang-switcher" style="padding: 12px 0;">
-                <a href="https://quielorodriguez.github.io/aetherobotics/" hreflang="en">EN</a>
-                <span class="separator">|</span>
-                <span class="active-lang">JA</span>
-                <span class="separator">|</span>
-                <a href="https://quielorodriguez.github.io/aether-robotics-es/" hreflang="es">ES</a>
-                <span class="separator">|</span>
-                <a href="https://quielorodriguez.github.io/aether-robotics-fr/" hreflang="fr">FR</a>
+            <!-- Language Dropdown for Mobile -->
+            <div class="lang-selector-wrapper">
+                <select id="lang-selector-mobile" class="lang-selector">
+                    <option value="https://quielorodriguez.github.io/aetherobotics/" lang="en">English</option>
+                    <option value="https://quielorodriguez.github.io/aether-robotics-es/" lang="es">Español</option>
+                    <option value="https://quielorodriguez.github.io/aether-robotics-fr/" lang="fr">Français</option>
+                    <option value="https://quielorodriguez.github.io/aether-robotics-jp/" lang="ja" selected>日本語</option>
+                </select>
             </div>
         </div>
     </nav>
@@ -1084,6 +1113,8 @@
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileNav = document.getElementById('mobileNav');
             const navLinks = document.querySelectorAll('.nav-link');
+            const desktopLangSelector = document.getElementById('lang-selector-desktop');
+            const mobileLangSelector = document.getElementById('lang-selector-mobile');
 
             // Function to toggle mobile menu visibility
             mobileMenuBtn.addEventListener('click', () => {
@@ -1149,6 +1180,35 @@
             } else {
                 document.querySelector('.nav-link[href="#home"]').classList.add('active');
             }
+
+            // Handle language selector change for desktop
+            if (desktopLangSelector) {
+                desktopLangSelector.addEventListener('change', (e) => {
+                    window.location.href = e.target.value;
+                });
+            }
+
+            // Handle language selector change for mobile
+            if (mobileLangSelector) {
+                mobileLangSelector.addEventListener('change', (e) => {
+                    window.location.href = e.target.value;
+                });
+            }
+
+            // Set the current language as selected in the dropdowns on load
+            const currentPath = window.location.href;
+            const setDropdownSelected = (selector) => {
+                if (selector) {
+                    Array.from(selector.options).forEach(option => {
+                        if (currentPath.includes(option.value)) {
+                            option.selected = true;
+                        }
+                    });
+                }
+            };
+
+            setDropdownSelected(desktopLangSelector);
+            setDropdownSelected(mobileLangSelector);
         });
     </script>
 </body>
