@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Robotics - 人型ロボットとナノロボティクスを進化させる</title>
+    <meta name="description" content="Aether Robotics - 米国と日本に拠点を置く、人型ロボットとナノロボティクス分野の先駆的スタートアップ">
+    <meta name="keywords" content="ロボット工学, ナノロボティクス, 人型ロボット, AI, ヘルスケア技術">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Define CSS Variables for consistent theming */
+        :root {
+            --primary-color: rgb(117, 200, 200); /* Main accent color */
+            --primary-hover: rgb(97, 180, 180);   /* Darker shade for hover states */
+            --primary-light: rgba(117, 200, 200, 0.1); /* Light tint for backgrounds/icons */
+            --primary-border: rgba(117, 200, 200, 0.2);/* Border color for primary elements */
+            --text-primary: #1d1d1f; /* Dark text for headings and main content */
+            --text-secondary: #6e6e73; /* Lighter text for paragraphs and descriptions */
+            --text-tertiary: #86868b; /* Even lighter text, often for notes or secondary info */
+            --surface: #f5f5f7; /* Light background for sections */
+            --surface-elevated: rgba(255, 255, 255, 0.8); /* Semi-transparent white for cards, with backdrop blur */
+            --border-light: rgba(0, 0, 0, 0.08); /* Light border for subtle separation */
+        }
+        
+        /* Universal box-sizing for all elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Base body styles for typography and background */
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif; /* Apple-like font stack */
+            font-weight: 400;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            color: var(--text-primary);
+            background: #fff;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            padding-top: 44px; /* Space for the fixed navigation bar */
+        }
+        
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Bar Styles */
+        .nav {
+            position: fixed; /* Fixes nav to the top */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100; /* Ensures nav is above other content */
+            background: rgba(255, 255, 255, 0.72); /* Semi-transparent background */
+            backdrop-filter: saturate(180%) blur(20px); /* Frosted glass effect */
+            border-bottom: 1px solid var(--border-light); /* Subtle bottom border */
+            transition: all 0.3s ease; /* Smooth transitions for any changes */
+        }
+        
+        .nav-content {
+            max-width: 1200px; /* Max width for content */
+            margin: 0 auto; /* Center content horizontally */
+            padding: 0 22px; /* Horizontal padding */
+            height: 44px; /* Fixed height for the nav bar */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Distribute items with space between */
+        }
+        
+        .nav-logo {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        
+        .nav-logo .accent {
+            color: var(--primary-color); /* Highlight color for part of the logo */
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px; /* Space between nav links */
+        }
+        
+        .nav-link {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: opacity 0.3s ease; /* Smooth hover effect */
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.8; /* Dim on hover */
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color); /* Highlight active link */
+            font-weight: 500;
+        }
+        
+        /* Mobile Menu Button (hidden by default on desktop) */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 17px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        /* Mobile Navigation Menu */
+        .mobile-nav {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 44px; /* Position below the main nav */
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95); /* More opaque background */
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 20px 22px;
+            flex-direction: column; /* Stack links vertically */
+            gap: 12px;
+        }
+        
+        .mobile-nav.active {
+            display: flex; /* Show when active */
+        }
+        
+        .mobile-nav .nav-link {
+            display: block; /* Make links block-level */
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light); /* Separator between links */
+        }
+        
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none; /* No border for the last link */
+        }
+
+        /* Language Switcher Styles */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            margin-left: 32px; /* Space from last nav link */
+        }
+
+        .lang-switcher a, .lang-switcher span {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+        }
+
+        .lang-switcher .active-lang {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .lang-switcher a:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+        .lang-switcher .separator {
+            color: var(--text-tertiary);
+            margin: 0 8px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh; /* Full viewport height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 22px 50px; /* Padding for content */
+            background: linear-gradient(135deg, #fafafa 0%, var(--surface) 100%); /* Gradient background */
+        }
+        
+        .hero-content {
+            max-width: 900px;
+        }
+        
+        .hero-title {
+            font-size: clamp(48px, 8vw, 96px); /* Responsive font size */
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(21px, 3vw, 28px);
+            font-weight: 400;
+            line-height: 1.29;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .accent-text {
+            color: var(--primary-color); /* Highlight color for text */
+        }
+        
+        /* Primary Button Style */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            font-size: 17px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 980px; /* Pill shape */
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+        
+        /* Secondary Button Style */
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* General Section Styles */
+        .section {
+            padding: 100px 22px; /* Vertical and horizontal padding for sections */
+        }
+        
+        .container {
+            max-width: 1200px; /* Max width for section content */
+            margin: 0 auto; /* Center content */
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            line-height: 1.07;
+            letter-spacing: -0.015em;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 21px;
+            font-weight: 400;
+            line-height: 1.29;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content-text {
+            font-size: 19px;
+            font-weight: 400;
+            line-height: 1.42;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        
+        .content-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 40px;
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Two columns, responsive */
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Three columns, responsive */
+        }
+        
+        /* Card Styles (general purpose) */
+        .card {
+            background: var(--surface-elevated);
+            /* Liquid Glass Effect */
+            backdrop-filter: saturate(180%) blur(30px); /* Increased blur */
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%); /* Subtle gradient for light reflection */
+            background-blend-mode: overlay; /* Blends gradient with existing background */
+            border-radius: 18px;
+            padding: 40px;
+            border: 1px solid var(--border-light);
+            transition: all 0.4s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px); /* Lift effect on hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* Shadow effect on hover */
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.17;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .card-text {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.47;
+            color: var(--text-secondary);
+        }
+        
+        /* Project Card Specific Styles */
+        .project-card {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            border: 1px solid var(--border-light);
+            transition: all 0.4s ease;
+            height: 100%; /* Ensure cards are same height in a row */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-emoji {
+            font-size: 40px; /* Emoji sizing */
+            margin-bottom: 20px;
+        }
+
+        .project-icon-fa {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 12px;
+        }
+        
+        .project-title {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.17;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .project-description {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.47;
+            color: var(--text-secondary);
+            flex-grow: 1; /* Allows description to take available space */
+            margin-bottom: 20px;
+        }
+        
+        .project-link {
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 17px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-link:hover {
+            opacity: 0.8;
+        }
+        
+        /* Values Grid Specific Styles */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .value-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-light);
+            border-radius: 16px;
+            margin-left: auto;
+            margin-right: auto; /* Center the icon */
+        }
+        
+        .value-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .value-text {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.47;
+            color: var(--text-secondary);
+        }
+        
+        /* Contribution Section Specific Styles */
+        .crypto-section {
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 40px;
+            margin-top: 40px;
+            /* Liquid Glass Effect */
+            backdrop-filter: saturate(180%) blur(20px);
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            background-blend-mode: overlay;
+            border: 1px solid var(--border-light);
+        }
+        
+        .crypto-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .crypto-item {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .crypto-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .crypto-label {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .crypto-address {
+            background: rgba(0, 0, 0, 0.04);
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'SF Mono', Monaco, monospace; /* Monospaced font for addresses */
+            font-size: 15px;
+            word-break: break-all; /* Ensures long addresses wrap */
+            margin: 8px 0;
+            color: var(--text-primary);
+        }
+        
+        .crypto-note {
+            font-size: 15px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+        
+        /* Contact Section Specific Styles */
+        .contact-card {
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 40px;
+            /* Liquid Glass Effect */
+            backdrop-filter: saturate(180%) blur(20px);
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            background-blend-mode: overlay;
+            border: 1px solid var(--border-light);
+        }
+        
+        .contact-email {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 20px 0;
+            display: block;
+            word-break: break-all;
+        }
+        
+        .contact-email:hover {
+            opacity: 0.8;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background: var(--text-primary); /* Dark background */
+            color: white;
+            padding: 60px 22px 40px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8); /* Lighter text for links */
+            text-decoration: none;
+            font-size: 17px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white; /* Brighter on hover */
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+        }
+
+        /* Line separator under section headers */
+        .section-header .line {
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 0 auto 24px; /* Center the line */
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide desktop nav links */
+            }
+            
+            .mobile-menu-btn {
+                display: block; /* Show mobile menu button */
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr; /* Single column layout for 2-column grids */
+            }
+            
+            .grid-3 {
+                grid-template-columns: 1fr; /* Single column layout for 3-column grids */
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr; /* Single column for values */
+            }
+            
+            .section {
+                padding: 60px 22px; /* Reduced section padding */
+            }
+            
+            .card, .project-card {
+                padding: 30px; /* Reduced card padding */
+            }
+            
+            .footer-links {
+                flex-direction: column; /* Stack footer links vertically */
+                gap: 16px;
+            }
+
+            /* Adjust button spacing for mobile */
+            .card > div[style*="display: flex"] {
+                flex-direction: column;
+                gap: 15px !important; /* Important to override inline style */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-content {
+                padding: 0 16px; /* Further reduced nav padding */
+            }
+            
+            .section {
+                padding: 40px 16px; /* Further reduced section padding */
+            }
+            
+            .hero {
+                padding: 80px 16px 40px; /* Further reduced hero padding */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="#home" class="nav-logo">
+                <span class="accent">Aether</span>Robotics
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">ホーム</a>
+                <a href="#why-aether" class="nav-link">Aetherを選ぶ理由</a>
+                <a href="#projects" class="nav-link">プロジェクト</a>
+                <a href="#values" class="nav-link">私たちの価値</a>
+                <a href="#about" class="nav-link">Aetherについて</a>
+                <a href="#contribute" class="nav-link">貢献</a>
+                <a href="#contact" class="nav-link">お問い合わせ</a>
+                <div class="lang-switcher">
+                    <a href="https://quielorodriguez.github.io/aetherobotics/" hreflang="en">EN</a>
+                    <span class="separator">|</span>
+                    <span class="active-lang">JA</span>
+                    <span class="separator">|</span>
+                    <a href="https://quielorodriguez.github.io/aether-robotics-es/" hreflang="es">ES</a>
+                    <span class="separator">|</span>
+                    <a href="https://quielorodriguez.github.io/aether-robotics-fr/" hreflang="fr">FR</a>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home" class="nav-link">ホーム</a>
+            <a href="#why-aether" class="nav-link">Aetherを選ぶ理由</a>
+            <a href="#projects" class="nav-link">プロジェクト</a>
+            <a href="#values" class="nav-link">私たちの価値</a>
+            <a href="#about" class="nav-link">Aetherについて</a>
+            <a href="#contribute" class="nav-link">貢献</a>
+            <a href="#contact" class="nav-link">お問い合わせ</a>
+            <div class="lang-switcher" style="padding: 12px 0;">
+                <a href="https://quielorodriguez.github.io/aetherobotics/" hreflang="en">EN</a>
+                <span class="separator">|</span>
+                <span class="active-lang">JA</span>
+                <span class="separator">|</span>
+                <a href="https://quielorodriguez.github.io/aether-robotics-es/" hreflang="es">ES</a>
+                <span class="separator">|</span>
+                <a href="https://quielorodriguez.github.io/aether-robotics-fr/" hreflang="fr">FR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                ロボット工学の未来。<br>
+                <span class="accent-text">今日、設計される。</span>
+            </h1>
+            <p class="hero-subtitle">
+                米国と日本に拠点を置く、人型ロボットとナノロボティクスを進化させ、より良い明日を創造するための先駆的スタートアップ。
+            </p>
+            <a href="#why-aether" class="btn">私たちの可能性を探る</a>
+        </div>
+    </section>
+    
+    <!-- Innovation Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">交差点でのイノベーション</h2>
+                <p class="section-subtitle">最先端技術と人間のニーズが融合する場所</p>
+                <div class="line"></div>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title">ナノロボティクス</h3>
+                    <p class="card-text">癌細胞を標的とし、環境を浄化し、生態系を前例のない精度で回復させる革新的なナノボット。ヘルスケアおよび環境技術における数兆ドル規模の市場機会。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">人型ロボット工学</h3>
+                    <p class="card-text">インテリジェントな自動化を通じて、ヘルスケア、建設、小売を変革する高度な人型システム。世界の産業における労働と生産性を再定義する準備ができています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Section: Why Aether Robotics? (Investor-focused) -->
+    <section id="why-aether" class="section" style="padding-top: 100px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">なぜAether Roboticsなのか？</h1>
+                <p class="section-subtitle">先見の明のある投資家のための戦略的優位性</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title">破壊的なIPと技術</h3>
+                    <p class="card-text">シリコンベースのナノロボティクスと高度な人型移動における当社の特許取得済みブレークスルーは、揺るぎない競争上の優位性を確立します。私たちは未来に参加するだけでなく、分子レベルで、そして人型ロボットのあらゆる機敏な動きでそれを構築しています。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">巨大で未開拓の市場</h3>
+                    <p class="card-text">病気の根源と戦うナノボットによる精密医療から、高齢者介護や危険な建設などの産業を革新する人型自動化まで、Aether Roboticsは、破壊と前例のない成長の可能性を秘めた数兆ドル規模の市場をターゲットにしています。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">先見の明のあるリーダーシップと人材</h3>
+                    <p class="card-text">世界的に有名なロボット工学者、AIのパイオニア、戦略的思考家からなるチームを率いるAether Roboticsは、大胆なビジョンと綿密な実行の融合を体現しています。米国と日本にまたがる当社のグローバルチームは、革新的なソリューションを提供することに単一に集中しています。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">スケーラビリティとエコシステムシナジー</h3>
+                    <p class="card-text">当社のモジュラー設計と適応性のあるAIフレームワークにより、当社の技術は多様なアプリケーション全体で本質的にスケーラブルであることが保証されます。Aether Roboticsの統合は、単に会社を買収するだけでなく、無数の新しい製品やサービスに拡大できる未来に備えたプラットフォームを獲得することを意味します。</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="#contribute" class="btn">Aether Roboticsと提携する</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Page Section -->
+    <section id="projects" class="section" style="padding-top: 100px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">私たちのプロジェクト</h1>
+                <p class="section-subtitle">革新的なロボット工学を通じて産業を変革する</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="project-card">
+                    <div class="project-icon-fa">🛡️</div>
+                    <h3 class="project-title">がん・ウイルス標的化</h3>
+                    <p class="project-description">がん細胞やウイルスを特定し標的とすることを目指すシリコンベースのナノボットを開発し、健全な組織への害を最小限に抑えつつ精密な治療を追求しています。これは医療介入のパラダイムシフトを意味します。</p>
+                    <a href="#project-cancer" class="project-link">詳細を見る →</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon-fa">🧬</div>
+                    <h3 class="project-title">Aether A1 G-Repair</h3>
+                    <p class="project-description">身体の自然なDNA修復プロセスを強化することに焦点を当てた画期的なナノテクノロジーイニシアチブであり、細胞の完全性と寿命に貢献します。将来のアンチエイジングおよび再生医療の礎石です。</p>
+                    <a href="#project-repair" class="project-link">詳細を見る →</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon-fa">🌱</div>
+                    <h3 class="project-title">環境ナノボット</h3>
+                    <p class="project-description">石油流出を浄化し、サンゴ礁に生命を救う治療法を提供するためのナノボットを設計し、生態系の健康と持続可能性を促進します。微細な精度で世界の重要な環境危機に対処します。</p>
+                    <a href="#project-environment" class="project-link">詳細を見る →</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon-fa">👩‍⚕️</div>
+                    <h3 class="project-title">Hanzō M.E.C</h3>
+                    <p class="project-description">医療・高齢者介護向けの人型ロボット。主な用途には、同伴、日常業務支援、健康監視が含まれます。インテリジェントで共感的な支援により、高齢者介護と病院サポートを革新します。</p>
+                    <a href="#project-mec" class="project-link">詳細を見る →</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon-fa">🏗️</div>
+                    <h3 class="project-title">Hanzō C.E.M</h3>
+                    <p class="project-description">建設・製造業向けの人型ロボット。4本の脚、360°カメラ、4本のアームを備え、危険な作業を安全に処理します。高リスクな産業環境における安全性と効率性を向上させます。</p>
+                    <a href="#project-cem" class="project-link">詳細を見る →</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon-fa">🛒</div>
+                    <h3 class="project-title">Hanzō R.A.I</h3>
+                    <p class="project-description">小売自動化・イノベーション向けの人型ロボット。統合決済と埋め込みカメラによる商品スキャン機能を備えています。自律的なサービスを通じて、小売業務を効率化し、顧客体験を向上させます。</p>
+                    <a href="#project-rai" class="project-link">詳細を見る →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Detail Sections (Follow Projects Section) -->
+    <section id="project-cancer" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">がん・ウイルス標的化</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">当社のシリコンベースのナノボットは、前例のない精度でがん細胞やウイルスを特定し標的とすることを目指す、精密医療における画期的な進歩です。このイニシアチブは、世界中の治療アプローチを再定義することを約束します。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>悪性細胞の高特異的標的化</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>局所的な治療ペイロード送達</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>健全な組織への影響を最小限に抑える</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>リアルタイム監視機能</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-repair" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">Aether A1 G-Repair</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">Aether A1 G-Repairプロジェクトは、体の自然なDNA修復プロセスを強化する画期的なナノテクノロジーの開発に焦点を当て、細胞の完全性と寿命に貢献します。この基礎研究は、人間の健康寿命を延ばす鍵を握っています。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>自然なDNA修復メカニズムを強化</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>細胞寿命の改善を目指す</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>アンチエイジングへの応用可能性</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>プロトタイプは2028年第2四半期に予定</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-environment" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">環境ナノボット</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">当社の環境ナノボットは、汚染の軽減から損傷した生態系の回復まで、重要な生態学的課題に取り組むように設計されています。これらのソリューションは、地球規模の環境持続可能性と気候回復力に不可欠です。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>効率的な油流出の浄化と修復</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>サンゴ礁への標的型治療送達</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>生態系の健康と生物多様性を促進</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>環境フットプリントを最小限に抑える</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-mec" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">Hanzō M.E.C (医療・高齢者介護)</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">Hanzō M.E.Cは、医療従事者をサポートし、高齢者に不可欠な支援を提供するために設計された、思いやりのある人型ロボットです。このイノベーションは、深刻な人手不足に対処し、ヘルスケアにおける生活の質を向上させます。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>交際と精神的サポートを提供</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>日常業務と移動を支援</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>バイタルサインと健康指標を監視</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>緊急時に介護者にアラートを送信</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-cem" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">Hanzō C.E.M (建設・製造業)</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">Hanzō C.E.Mは、建設および製造環境における要求の厳しい作業のために設計された堅牢な人型ロボットです。その機能は、重工業における安全基準と運用効率を再構築することを約束します。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>不均一な地形での安定性を高める4本脚</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>包括的な状況認識のための360°カメラ</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>複雑な操作のための4つの独立したアーム</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>危険な作業を安全に処理し、人間のリスクを低減</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-rai" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">Hanzō R.A.I (小売自動化・イノベーション)</h2>
+                <div class="line"></div>
+            </div>
+            <div class="card">
+                <p class="content-text" style="margin-bottom: 20px;">Hanzō R.A.Iは、小売体験を革新し、統合されたスマート機能でタスクを自動化し、顧客とのインタラクションを強化します。このインテリジェントな自動化ソリューションは、急速に進化する小売部門において競争優位性を提供します。</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>シームレスな取引のための統合決済システム</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>在庫管理のための埋め込みカメラによる商品スキャン</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>顧客支援と情報提供</li>
+                    <li style="margin-bottom: 10px; display: flex; align-items: center; font-size: 17px; color: var(--text-secondary);"><span style="margin-right: 12px; color: var(--primary-color); font-size: 20px;">✓</span>店舗運営と顧客満足度を最適化</li>
+                </ul>
+                <a href="#projects" class="btn-secondary btn" style="margin-top: 20px; display: inline-block;">← プロジェクトに戻る</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Page Section -->
+    <section id="values" class="section" style="padding-top: 100px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">私たちの核となる価値</h1>
+                <p class="section-subtitle">私たちのイノベーションを導く原則</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🧠</div>
+                    <h3 class="value-title">AI駆動型イノベーション</h3>
+                    <p class="value-text">AIを活用してナノロボットと人型システムを強化し、よりスマートで、より迅速で、より影響力のあるソリューションを確保します。</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">🌿</div>
+                    <h3 class="value-title">持続可能性と責任</h3>
+                    <p class="value-text">最小限の生態系への影響で、石油流出やサンゴ礁の修復など、重要な環境課題に対処するナノロボットに焦点を当てています。</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">コラボレーションとエコシステム</h3>
+                    <p class="value-text">公共部門、民間部門、研究部門間のパートナーシップを育成し、進歩を推進し、繁栄するイノベーションエコシステムを構築します。</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">💡</div>
+                    <h3 class="value-title">人材と創造性をエンパワーメント</h3>
+                    <p class="value-text">AI駆動型経済のためのスキルをチームに身につけさせ、創造性と継続的な学習の文化を育みます。</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">🌍</div>
+                    <h3 class="value-title">公共の利益への影響</h3>
+                    <p class="value-text">対象を絞ったヘルスケア、環境保護、社会への利益を通じて、生活を向上させる技術を創造することを目指しています。</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon">🛡️</div>
+                    <h3 class="value-title">倫理的開発と安全性</h3>
+                    <p class="value-text">安全性、透明性、倫理的考慮事項を優先し、技術の責任ある設計、開発、展開にコミットしています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page Section -->
+    <section id="about" class="section" style="padding-top: 100px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">Aether Robotics: 地平線の彼方へ</h1>
+                <p class="section-subtitle">人間の創意工夫とロボットの進化が融合する未来を築く。</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="grid grid-2">
+                <div>
+                    <h2 class="card-title">私たちのビジョンと目的</h2>
+                    <p class="content-text">
+                        Aether Roboticsにおいて、私たちの使命は単なる工学を超え、人類の能力の新時代を築くことにあります。私たちは、先見の明のあるデザインと深い目的を注入された技術が、かつて不可能とされた未来を解き放つことができるという深い信念によって突き動かされています。<strong>米国</strong>での先駆的なルーツから、<strong>日本</strong>での拡大する存在感まで、私たちは多様な視点を結集し、高度なロボット工学を通じて存在そのものを根本的に再定義します。
+                    </p>
+                    <p class="content-text">
+                        私たちは分子工学とインテリジェントな自律性の複雑な舞に没頭し、ナノボットが治癒し浄化するだけでなく、産業を再構築し、人型ロボットが人間の潜在能力をシームレスに拡張する世界を envision します。これは単に機械を構築することではありません。それは人間の創意工夫の範囲を広げ、私たちの能力を増強し、集合的な経験を深く向上させるツールを作り出すことです。
+                    </p>
+                </div>
+                <div>
+                    <h2 class="card-title">影響を明らかにし、産業を再定義する</h2>
+                    <p class="content-text">
+                        私たちの創造物は、研究室の枠をはるかに超えて波及し、世界の社会と商業の基本的な構造を再構築する運命にあります。ナノボットが比類のない精度で細胞修復を行い、人型ロボットがサプライチェーンとパーソナライズされたケアを変革する未来を想像してみてください。これは、私たちが予測するだけでなく、積極的にエンジニアリングしている未来です。人間の願望がインテリジェントな機械によって増幅され、新しい市場、比類のない効率性、そしてこれまで想像できなかった人間の幸福のレベルにつながる未来です。
+                    </p>
+                    <p class="content-text">
+                        このプラットフォームは、私たちが次に目指すものへの絶え間ない追求の証です。私たちは、イノベーションの深さを探り、当社の技術がもたらす戦略的な機会を理解し、Aether Roboticsの大胆なビジョンが不可欠な現実となる未来を形作ることに参加するよう、皆様を招待します。これは技術以上のものです。それは深い変革です。
+                    </p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="#values" class="btn-secondary btn">私たちの価値を発見する</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Page Section -->
+    <section id="contribute" class="section" style="padding-top: 100px;">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">私たちのビジョンを支援する</h1>
+                <p class="section-subtitle">あなたの貢献は、革新的なロボット技術の開発を加速させます</p>
+                <div class="line"></div>
+            </div>
+            
+            <div class="card" style="text-align: center; margin-bottom: 40px;">
+                <h3 class="card-title">安全なオンライン決済</h3>
+                <p class="card-text" style="margin-bottom: 30px;">PayPalまたはStripeを使用して簡単に寄付できます。どちらのプラットフォームも業界標準の暗号化と堅牢なセキュリティ対策を使用しています。</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://www.paypal.com/ncp/payment/ZVZ9EEK4WTQPA" target="_blank" class="btn"><i class="fab fa-paypal mr-2"></i>PayPalで寄付</a>
+                    <a href="https://buy.stripe.com/6oEdSg5whbJ02TS5kk" target="_blank" class="btn"><i class="fas fa-credit-card mr-2"></i>Stripeで寄付</a>
+                </div>
+            </div>
+            
+            <div class="crypto-section">
+                <h3 class="crypto-title">暗号通貨での寄付</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">
+                    さまざまな暗号通貨での貢献を歓迎します。対応するアドレスに正しい通貨を送付してください。</p>
+                
+                <div class="crypto-item">
+                    <div class="crypto-label">イーサリアムベース (ERC-20 & その他)</div>
+                    <p class="crypto-note">ネットワーク: Optimism, Ethereum, Base, Arbitrum, Gravity, Polygon, Zora, Blast, Degenなど</p>
+                    <div class="crypto-address">0x296f4f5F683A5Ba4B6b15Aa7e5850A51AC9edb6f</div>
+                </div>
+
+                <div class="crypto-item">
+                    <div class="crypto-label">ビットコイン (BTC)</div>
+                    <div class="crypto-address">bc1qw059p5f02jhmrskt370r5f09mtscwmwrqzr9hy</div>
+                </div>
+
+                <div class="crypto-item">
+                    <div class="crypto-label">ソラナ (SOL)</div>
+                    <div class="crypto-address">5s8zbZN1NEkT7crUg1wtJJDt9Usiz5pj6Lda1qCEJWgX</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section" style="padding-top: 100px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <h2 class="section-title">お問い合わせ</h2>
+                <div class="line"></div>
+            </div>
+            <div class="contact-card">
+                <p class="content-text" style="margin-bottom: 20px;">協力、投資、または当社のイノベーションについてさらに詳しく知りたいですか？</p>
+                <a href="mailto:aetherobotics@icloud.com" class="contact-email">aetherobotics@icloud.com</a>
+                <p class="card-text">ご連絡をお待ちしております。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text" style="margin-bottom: 32px;">&copy; 2025 Aether Robotics. 全著作権所有。</p>
+            <div class="footer-links">
+                <a href="https://mirror.xyz/0x296f4f5F683A5Ba4B6b15Aa7e5850A51AC9edb6f" target="_blank" rel="noopener noreferrer" class="footer-link">Mirror</a>
+                <a href="https://medium.com/@aetherrobotics" target="_blank" rel="noopener noreferrer" class="footer-link">Medium</a>
+                <a href="https://x.com/AetherRobotics" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://instagram.com/Aether_Robotics" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileNav = document.getElementById('mobileNav');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Function to toggle mobile menu visibility
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+            });
+
+            // Close mobile menu when a navigation link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (mobileNav.classList.contains('active') && mobileNav.contains(e.target)) {
+                        mobileNav.classList.remove('active');
+                    }
+                });
+            });
+
+            // Add smooth scrolling for all internal anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        console.error(`Target element with ID "#${targetId}" not found.`);
+                    }
+                });
+            });
+
+            // Set active class on nav links based on current section in view
+            const sections = document.querySelectorAll('section[id]');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 60; 
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                document.querySelectorAll(`.nav-link[href*="#${current}"]`).forEach(link => {
+                    link.classList.add('active');
+                });
+            });
+
+            // Set active class for initial load based on URL hash or default to home
+            const initialHash = window.location.hash.substring(1);
+            if (initialHash) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href').includes(initialHash)) {
+                        link.classList.add('active');
+                    }
+                });
+            } else {
+                document.querySelector('.nav-link[href="#home"]').classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
